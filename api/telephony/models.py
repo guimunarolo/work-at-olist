@@ -16,7 +16,7 @@ class CallEvent(models.Model):
     )
 
     event_type = models.CharField(max_length=2, choices=EVENT_TYPES,
-                                  db_index=True)
+                                  db_index=True, default=TYPE_START)
     call_id = models.PositiveIntegerField(default=get_new_call_id, 
                                           db_index=True)
     source = models.CharField(max_length=11, null=True, blank=True)
