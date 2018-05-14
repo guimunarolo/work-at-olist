@@ -18,7 +18,7 @@ services:
   db:
     image: postgres
     volumes:
-      - db:/var/lib/postgresql
+      - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
@@ -27,4 +27,4 @@ services:
       POSTGRES_PASSWORD: pass123
   
 volumes:
-  db: {}
+  pgdata: {}
