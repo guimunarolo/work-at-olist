@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  api:
+    build: ./api
+    command: su -c "python /api/manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./api:/api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    links:
+      - db
+    env_file:
+      - ./api/dev.env
+
+  db:
+    image: postgres
+    volumes:
+      - db:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: olist
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: pass123
+  
+volumes:
+  db: {}
