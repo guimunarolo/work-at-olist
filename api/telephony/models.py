@@ -1,7 +1,7 @@
-import uuid
-from datetime import datetime
-
 from django.db import models
+from django.utils import timezone
+
+from .services.call_event_data import get_new_call_id
 
 
 class CallEvent(models.Model):
@@ -17,10 +17,11 @@ class CallEvent(models.Model):
 
     event_type = models.CharField(max_length=2, choices=EVENT_TYPES,
                                   db_index=True)
-    call_id = models.UUIDField(default=uuid.uuid4, db_index=True)
+    call_id = models.PositiveIntegerField(default=get_new_call_id, 
+                                          db_index=True)
     source = models.CharField(max_length=11, null=True, blank=True)
     destination = models.CharField(max_length=11, null=True, blank=True)
-    created = models.DateTimeField(default=datetime.now)
+    created = models.DateTimeField(default=timezone.now)
 
     class Meta:
         verbose_name = 'Call Event'
