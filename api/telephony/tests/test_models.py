@@ -1,3 +1,6 @@
+import datetime
+import time
+
 from django.test import TestCase
 
 from telephony.tests.factories import CallEventFactory
@@ -12,6 +15,12 @@ class CallEventFactoryTestCase(TestCase):
                                               call.event_type))
 
     def test_call_id_default(self):
-    	call = CallEventFactory.create()
-    	call2 = CallEventFactory.create()
-    	self.assertEqual(call2.call_id, call.call_id + 1)
+        call = CallEventFactory.create()
+        call2 = CallEventFactory.create()
+        self.assertEqual(call2.call_id, call.call_id + 1)
+
+    def test_timestamp_property(self):
+        current_time = time.time()
+        call = CallEventFactory.create(
+            created=datetime.datetime.fromtimestamp(int(current_time)))
+        self.assertEqual(call.timestamp, int(current_time))
