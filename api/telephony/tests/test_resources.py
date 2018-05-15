@@ -8,6 +8,7 @@ from rest_framework.test import APITestCase
 from telephony.models import CallEvent
 from telephony.tests.factories import CallEventFactory
 
+
 class CallEventResoiureTests(APITestCase):
 
     def setUp(self):

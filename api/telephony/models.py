@@ -50,7 +50,8 @@ class CallEvent(models.Model):
         verbose_name_plural = 'Call Events'
         indexes = [
             models.Index(fields=['call_id', 'event_type']),
-            models.Index(fields=['call_id', 'event_type', 'source', 'created']),
+            models.Index(
+                fields=['call_id', 'event_type', 'source', 'created']),
         ]
 
     def __str__(self):
