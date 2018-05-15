@@ -33,22 +33,25 @@ class CallEvent(models.Model):
         (TYPE_START, 'Started'),
     )
 
+    call_id = models.PositiveIntegerField(default=get_new_call_id)
     event_type = models.CharField(max_length=2, choices=EVENT_TYPES,
-                                  db_index=True, default=TYPE_START)
-    call_id = models.PositiveIntegerField(default=get_new_call_id,
-                                          db_index=True)
+                                  default=TYPE_START)
     source = models.CharField(max_length=11, null=True, blank=True)
     destination = models.CharField(max_length=11, null=True, blank=True)
     created = models.DateTimeField(default=timezone.now)
 
     # managers
+    objects = models.Manager()
     started = StartedCallEventManager()
     ended = EndedCallEventManager()
-    objects = models.Manager()
 
     class Meta:
         verbose_name = 'Call Event'
         verbose_name_plural = 'Call Events'
+        indexes = [
+            models.Index(fields=['call_id', 'event_type']),
+            models.Index(fields=['call_id', 'event_type', 'source', 'created']),
+        ]
 
     def __str__(self):
         return '#{} - {} - {}'.format(self.id, self.call_id, self.event_type)
