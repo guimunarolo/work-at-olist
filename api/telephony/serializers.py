@@ -10,10 +10,11 @@ from .models import CallEvent
 
 
 def validate_phone_number(value):
-    number = re.sub('[^0-9]', '', value)
-    if len(number) not in (10, 11):
-        raise serializers.ValidationError('Invalid phone number')
-    return number
+    if value:
+        number = re.sub('[^0-9]', '', value)
+        if len(number) not in (10, 11):
+            raise serializers.ValidationError('Invalid phone number')
+        return number
 
 
 class CallEventSerializer(serializers.Serializer):
@@ -21,10 +22,10 @@ class CallEventSerializer(serializers.Serializer):
     Serialize a data to generate a call event record.
     '''
     type = serializers.ChoiceField(choices=CallEvent.EVENT_TYPES)
-    timestamp = serializers.IntegerField(required=False)
-    call_id = serializers.IntegerField(required=False)
-    source = serializers.CharField(required=False)
-    destination = serializers.CharField(required=False)
+    timestamp = serializers.IntegerField(required=False, allow_null=True)
+    call_id = serializers.IntegerField(required=False, allow_null=True)
+    source = serializers.CharField(required=False, allow_null=True)
+    destination = serializers.CharField(required=False, allow_null=True)
 
     def validate_timestamp(self, value):
         try:
@@ -120,3 +121,15 @@ class CallEventSerializer(serializers.Serializer):
         call_event.save()
 
         return call_event
+
+    def to_representation(self, instance):
+        '''
+        Overrides the instance representation to return on Resource.
+        '''
+        return {
+            'type': instance.event_type,
+            'timestamp': instance.timestamp,
+            'call_id': instance.call_id,
+            'source': instance.source,
+            'destination': instance.destination,
+        }
