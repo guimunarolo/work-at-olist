@@ -46,6 +46,18 @@ class CallEventSerializerTestCase(TestCase):
         self.assertFalse(serializer.is_valid())
         self.assertIn('call_id', serializer.errors)
 
+        # test with an start record already taken
+        call_start = CallEventFactory.create(event_type=CallEvent.TYPE_START)
+        data = {
+            'type': CallEvent.TYPE_START,
+            'call_id': call_start.call_id,
+            'source': '(11) 99888-4875',
+            'destination': '(11) 99888-4875',
+        }
+        serializer = CallEventSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn('call_id', serializer.errors)
+
     def test_validate_timestamp(self):
         # test invalid timestamp
         data = {

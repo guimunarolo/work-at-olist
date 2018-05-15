@@ -67,6 +67,8 @@ class CallEventSerializer(serializers.Serializer):
         '''
         Start call event records logic.
         '''
+        call_id = data.get('call_id')
+
         if not data.get('source'):
             raise serializers.ValidationError({
                 'source': 'Field source is required',
@@ -75,6 +77,12 @@ class CallEventSerializer(serializers.Serializer):
         if not data.get('destination'):
             raise serializers.ValidationError({
                 'destination': 'Field destination is required',
+            })
+
+        query_condition = CallEvent.started.filter(call_id=call_id).exists()
+        if query_condition:
+            raise serializers.ValidationError({
+                'call_id': 'This call is already started',
             })
 
         return data
