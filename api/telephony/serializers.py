@@ -111,6 +111,8 @@ class CallEventSerializer(serializers.Serializer):
         }
 
         if timestamp:
+            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
+            print(datetime.datetime.fromtimestamp(timestamp))
             creation_data.update({
                 'created': datetime.datetime.fromtimestamp(timestamp)})
 
