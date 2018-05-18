@@ -28,11 +28,13 @@ class BillReport:
         previous month or lesser.
         '''
         today = date.today()
+        default_month = today.month - 1
+        default_year = today.year
 
         try:
             month = int(query_params.get('month'))
         except (ValueError, TypeError):
-            month = today.month - 1
+            month = default_year
 
         try:
             year = int(query_params.get('year'))
@@ -42,12 +44,12 @@ class BillReport:
         # set last month if month is invalid
         is_invalid_month = month not in range(1, 13)
         if is_invalid_month:
-            month = today.month - 1
+            month = default_month
 
         # set last month if it is the current month
-        is_current_month = (month, year) is (today.month, today.year)
+        is_current_month = (month, year) == (today.month, today.year)
         if is_current_month:
-            month -= 1
+            month = default_month
 
         # set december of last year if current month is january
         if not month:
@@ -65,27 +67,21 @@ class BillReport:
         annotated.
         '''
         end_query = CallEvent.ended.filter(call_id=OuterRef('call_id'))\
-                                     .order_by('-created')\
-                                     .values('created')[:1]
+                                   .order_by('-created')\
+                                   .values('created')[:1]
         queryset = CallEvent.started.annotate(ended=Subquery(end_query))\
                                     .filter(source=self.subscriber,
                                             ended__isnull=False,
                                             **self.cleaned_filters)
         return queryset
 
-    def format_price(self, price):
-        return price
-
-    def format_duration(self, duration):
-        return duration
-
     def format_obj(self, obj):
         return {
             'destination': obj.destination,
             'start_date': obj.created.date(),
             'start_time': obj.created.time(),
-            'duration': self.format_duration(0),
-            'price': self.format_price(0.0),
+            'duration': 0,
+            'price': 0.0
         }
 
     def make_report(self):
