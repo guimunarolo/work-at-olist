@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from .models import CallEvent
 from .serializers import CallEventSerializer
-from .services.bill_report import BillReport
+from .services.reports import BillReport
 
 
 class CallEventResource(APIView):
