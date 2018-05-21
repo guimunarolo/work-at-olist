@@ -18,9 +18,8 @@ def validate_phone_number(value):
 
 
 class CallEventSerializer(serializers.Serializer):
-    '''
-    Serialize a data to generate a call event record.
-    '''
+    """Serialize a data to generate a call event record."""
+
     type = serializers.ChoiceField(choices=CallEvent.EVENT_TYPES)
     timestamp = serializers.IntegerField(required=False, allow_null=True)
     call_id = serializers.IntegerField(required=False, allow_null=True)
@@ -43,9 +42,7 @@ class CallEventSerializer(serializers.Serializer):
         return validate_phone_number(value)
 
     def validate_end_type(self, data):
-        '''
-        End call event records logic.
-        '''
+        """End call event records logic."""
         call_id = data.get('call_id')
 
         if not call_id:
@@ -65,9 +62,7 @@ class CallEventSerializer(serializers.Serializer):
         return data
 
     def validate_start_type(self, data):
-        '''
-        Start call event records logic.
-        '''
+        """Start call event records logic."""
         call_id = data.get('call_id')
 
         if not data.get('source'):
@@ -99,9 +94,7 @@ class CallEventSerializer(serializers.Serializer):
         return data
 
     def create(self, cleaned_data):
-        '''
-        Create a call event record and return the object.
-        '''
+        """Create a call event record and return the object."""
         timestamp = cleaned_data.get('timestamp')
         call_id = cleaned_data.get('call_id')
         creation_data = {
@@ -111,8 +104,6 @@ class CallEventSerializer(serializers.Serializer):
         }
 
         if timestamp:
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
-            print(datetime.datetime.fromtimestamp(timestamp))
             creation_data.update({
                 'created': datetime.datetime.fromtimestamp(timestamp)})
 
@@ -125,9 +116,7 @@ class CallEventSerializer(serializers.Serializer):
         return call_event
 
     def to_representation(self, instance):
-        '''
-        Overrides the instance representation to return on Resource.
-        '''
+        """Override the instance representation to return on Resource."""
         return {
             'type': instance.event_type,
             'timestamp': instance.timestamp,

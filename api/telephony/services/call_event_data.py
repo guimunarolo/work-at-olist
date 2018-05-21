@@ -1,10 +1,12 @@
+"""CallEvent data logics."""
 
 
 def get_new_call_id():
-    '''
-    Returns a new call_id based on the last registered CallEvent.
+    """
+    Return a new call_id based on the last registered CallEvent.
+
     If there is no CallEvent on base, returns 1.
-    '''
+    """
     from telephony.models import CallEvent
 
     try:

@@ -5,27 +5,23 @@ from .services.call_event_data import get_new_call_id
 
 
 class StartedCallEventManager(models.Manager):
-    '''
-    Manager wich brings only call start event.
-    '''
+    """Manager wich brings only call start event."""
+
     def get_queryset(self, *args, **kwargs):
         return super().get_queryset(*args, **kwargs)\
                       .filter(event_type=CallEvent.TYPE_START)
 
 
 class EndedCallEventManager(models.Manager):
-    '''
-    Manager wich brings only call end event.
-    '''
+    """Manager wich brings only call end event."""
+
     def get_queryset(self, *args, **kwargs):
         return super().get_queryset(*args, **kwargs)\
                       .filter(event_type=CallEvent.TYPE_END)
 
 
 class CallEvent(models.Model):
-    '''
-    Model responsible to store phone calls events.
-    '''
+    """Model responsible to store phone calls events."""
 
     TYPE_END, TYPE_START = 'en', 'st'
     EVENT_TYPES = (

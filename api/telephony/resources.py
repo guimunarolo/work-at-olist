@@ -11,9 +11,8 @@ from .services.reports import BillReport
 
 
 class CallEventResource(APIView):
-    '''
-    Resource responsible to receive call events records.
-    '''
+    """Resource responsible to receive call events records."""
+
     serializer = CallEventSerializer
     logger = logging.getLogger('telephony.resources.CallEventResource')
 
@@ -37,9 +36,7 @@ class CallEventResource(APIView):
 
 
 class BillReportResource(APIView):
-    '''
-    Resource responsible to respond a bill resport.
-    '''
+    """Resource responsible to respond a bill resport."""
 
     def get(self, request, subscriber, format=None):
         query_params = self.request.query_params.copy()
