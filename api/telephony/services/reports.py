@@ -8,11 +8,11 @@ from telephony.models import CallEvent
 
 class BillReport:
     """
-    Responsible to generate a Bill Reportself.
+    Responsible to generate a Bill Report.
 
     Args:
         subscriber - Subscriber phone number
-        query_params (opitional) - filters month and year
+        query_params (optional) - filters month and year
     """
 
     # fixed charges to pay the connection
@@ -45,12 +45,12 @@ class BillReport:
         try:
             month = int(query_params.get('month'))
         except (ValueError, TypeError):
-            month = default_year
+            month = default_month
 
         try:
             year = int(query_params.get('year'))
         except (ValueError, TypeError):
-            year = today.year
+            year = default_year
 
         # set last month if month is invalid
         is_invalid_month = month not in range(1, 13)
@@ -65,7 +65,7 @@ class BillReport:
         # set december of last year if current month is january
         if not month:
             month = 12
-            year -= 1
+            year = default_year - 1
 
         return {
             'ended__month': month,
@@ -75,12 +75,12 @@ class BillReport:
     def get_queryset(self):
         """Return a queryset with completed calls."""
         end_query = CallEvent.endings.filter(call_id=OuterRef('call_id'))\
-                                   .order_by('-created')\
-                                   .values('created')[:1]
+                                     .order_by('-created')\
+                                     .values('created')[:1]
         queryset = CallEvent.beginnings.annotate(ended=Subquery(end_query))\
-                                    .filter(source=self.subscriber,
-                                            ended__isnull=False,
-                                            **self.cleaned_filters)
+                                       .filter(source=self.subscriber,
+                                               ended__isnull=False,
+                                               **self.cleaned_filters)
         return queryset
 
     def _calc_duration(self, start, end):
