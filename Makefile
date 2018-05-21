@@ -16,3 +16,6 @@ migrations:
 
 migrate:
 	docker-compose exec api su -c "python /api/manage.py migrate telephony"
+
+loaddata:
+	docker-compose exec api su -c "python /api/manage.py loaddata callevent_initials.json"
