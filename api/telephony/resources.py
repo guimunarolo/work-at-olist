@@ -1,11 +1,9 @@
 import logging
-from datetime import date
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import CallEvent
 from .serializers import CallEventSerializer
 from .services.reports import BillReport
 

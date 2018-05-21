@@ -1,8 +1,5 @@
 import datetime
 import re
-import time
-
-from django.utils import timezone
 
 from rest_framework import serializers
 
