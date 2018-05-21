@@ -23,14 +23,14 @@ class EndingCallEventManager(models.Manager):
 class CallEvent(models.Model):
     """Model responsible to store phone calls events."""
 
-    TYPE_END, TYPE_START = 'en', 'st'
+    TYPE_END, TYPE_START = 'end', 'start'
     EVENT_TYPES = (
-        (TYPE_END, 'Ended'),
-        (TYPE_START, 'Started'),
+        (TYPE_END, 'End'),
+        (TYPE_START, 'Start'),
     )
 
     call_id = models.PositiveIntegerField(default=get_new_call_id)
-    event_type = models.CharField(max_length=2, choices=EVENT_TYPES,
+    event_type = models.CharField(max_length=5, choices=EVENT_TYPES,
                                   default=TYPE_START)
     source = models.CharField(max_length=11, null=True, blank=True)
     destination = models.CharField(max_length=11, null=True, blank=True)
