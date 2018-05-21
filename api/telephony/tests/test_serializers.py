@@ -124,7 +124,7 @@ class CallEventSerializerTestCase(TestCase):
         serializer = CallEventSerializer(data=data)
         self.assertTrue(serializer.is_valid())
         call_obj = serializer.save()
-        self.assertTrue(CallEvent.started.count() is 1)
+        self.assertTrue(CallEvent.beginnings.count() is 1)
 
         # test create the end event for the last started call.
         data = {
@@ -134,4 +134,4 @@ class CallEventSerializerTestCase(TestCase):
         serializer = CallEventSerializer(data=data)
         self.assertTrue(serializer.is_valid())
         serializer.save()
-        self.assertTrue(CallEvent.ended.count() is 1)
+        self.assertTrue(CallEvent.endings.count() is 1)

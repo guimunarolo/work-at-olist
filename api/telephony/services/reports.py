@@ -74,10 +74,10 @@ class BillReport:
 
     def get_queryset(self):
         """Return a queryset with completed calls."""
-        end_query = CallEvent.ended.filter(call_id=OuterRef('call_id'))\
+        end_query = CallEvent.endings.filter(call_id=OuterRef('call_id'))\
                                    .order_by('-created')\
                                    .values('created')[:1]
-        queryset = CallEvent.started.annotate(ended=Subquery(end_query))\
+        queryset = CallEvent.beginnings.annotate(ended=Subquery(end_query))\
                                     .filter(source=self.subscriber,
                                             ended__isnull=False,
                                             **self.cleaned_filters)

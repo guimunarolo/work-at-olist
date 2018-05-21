@@ -50,7 +50,7 @@ class CallEventSerializer(serializers.Serializer):
                 'call_id': 'Field call_id is required',
             })
 
-        query_condition = CallEvent.ended.filter(call_id=call_id).exists()
+        query_condition = CallEvent.endings.filter(call_id=call_id).exists()
         if query_condition:
             raise serializers.ValidationError({
                 'call_id': 'This call is already ended',
@@ -75,7 +75,7 @@ class CallEventSerializer(serializers.Serializer):
                 'destination': 'Field destination is required',
             })
 
-        query_condition = CallEvent.started.filter(call_id=call_id).exists()
+        query_condition = CallEvent.beginnings.filter(call_id=call_id).exists()
         if query_condition:
             raise serializers.ValidationError({
                 'call_id': 'This call is already started',

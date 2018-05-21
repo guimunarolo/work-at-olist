@@ -4,16 +4,16 @@ from django.utils import timezone
 from .services.call_event_data import get_new_call_id
 
 
-class StartedCallEventManager(models.Manager):
-    """Manager wich brings only call start event."""
+class BeginningCallEventManager(models.Manager):
+    """Manager wich brings only call start events."""
 
     def get_queryset(self, *args, **kwargs):
         return super().get_queryset(*args, **kwargs)\
                       .filter(event_type=CallEvent.TYPE_START)
 
 
-class EndedCallEventManager(models.Manager):
-    """Manager wich brings only call end event."""
+class EndingCallEventManager(models.Manager):
+    """Manager wich brings only call end events."""
 
     def get_queryset(self, *args, **kwargs):
         return super().get_queryset(*args, **kwargs)\
@@ -38,8 +38,8 @@ class CallEvent(models.Model):
 
     # managers
     objects = models.Manager()
-    started = StartedCallEventManager()
-    ended = EndedCallEventManager()
+    beginnings = BeginningCallEventManager()
+    endings = EndingCallEventManager()
 
     class Meta:
         verbose_name = 'Call Event'

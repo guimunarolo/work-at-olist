@@ -26,7 +26,7 @@ class CallEventResoiureTests(APITestCase):
         data.update({'type': CallEvent.TYPE_START})
         response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(CallEvent.started.count(), 1)
+        self.assertEqual(CallEvent.beginnings.count(), 1)
 
     def test_create_end(self):
         """Test create a end call event."""
@@ -38,7 +38,7 @@ class CallEventResoiureTests(APITestCase):
         })
         response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(CallEvent.ended.count(), 1)
+        self.assertEqual(CallEvent.endings.count(), 1)
 
     def test_create_bad_request(self):
         """Test create without required field."""
