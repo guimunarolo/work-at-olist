@@ -52,25 +52,22 @@
     <a class="current" href=".">Home</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#olist-challenge">Olist Challenge</a></li>
+    <li class="toctree-l2"><a href="#api-documentation">API Documentation</a></li>
     
         <ul>
         
-            <li><a class="toctree-l3" href="#environment">Environment</a></li>
+            <li><a class="toctree-l3" href="#url">URL</a></li>
         
-            <li><a class="toctree-l3" href="#how-to-run">How to run</a></li>
+            <li><a class="toctree-l3" href="#accepted">Accepted</a></li>
         
-            <li><a class="toctree-l3" href="#running-tests">Running tests</a></li>
+            <li><a class="toctree-l3" href="#call-events-record">Call Events Record</a></li>
+        
+            <li><a class="toctree-l3" href="#bill-report">Bill Report</a></li>
         
         </ul>
     
 
     </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="api/">API</a>
 	    </li>
           
         </ul>
@@ -105,52 +102,225 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="olist-challenge">Olist Challenge</h1>
-<p>This is an API restful that provides a call events record and a bill report.</p>
-<p>The applications was made with <code>Python 3.6</code>, <code>Django 2.0</code> and hosted at <code>Heroku</code>.</p>
-<blockquote>
-<p>You can see the entire challenge here <a href="https://github.com/olist/work-at-olist">Work at Olist</a>.</p>
-</blockquote>
-<h2 id="environment">Environment</h2>
+                <h1 id="api-documentation">API Documentation</h1>
+<p>Here you can understand how this API works.</p>
+<h2 id="url">URL</h2>
 <ul>
-<li>Macbook Pro <code>2017</code></li>
-<li>macOS Sierra <code>10.12.6</code></li>
-<li>Atom <code>1.27.0</code></li>
-<li>virtualenv <code>15.1.0</code></li>
-<li>Python <code>3.6.3</code></li>
-<li>Docker <code>18.03.1-ce</code> <code>build 9ee9f40</code></li>
-<li>docker-compose <code>1.21.1</code> <code>build 5a3f1a3</code></li>
+<li><a href="https://thawing-meadow-82188.herokuapp.com/v1/">https://thawing-meadow-82188.herokuapp.com/v1</a></li>
 </ul>
-<h2 id="how-to-run">How to run</h2>
-<p>With <code>Docker</code> and <code>docker-compose</code> properly installed and running, execute:</p>
-<pre><code>make
+<h2 id="accepted">Accepted</h2>
+<ul>
+<li><code>json</code></li>
+</ul>
+<h2 id="call-events-record">Call Events Record</h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th align="center">Method</th>
+<th align="center">Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/telephony/call-events/</td>
+<td align="center"><code>POST</code></td>
+<td align="center"><code>201</code>, <code>400</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="fields">Fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th align="center">Type</th>
+<th>Description</th>
+<th align="center">Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td align="center">string</td>
+<td>Indicate if it's a call "start" or "end" record</td>
+<td align="center">No</td>
+<td>"start"</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td align="center">int</td>
+<td>Valid timestamp that event happens</td>
+<td align="center">No</td>
+<td>Current timestamp</td>
+</tr>
+<tr>
+<td>call_id</td>
+<td align="center">int</td>
+<td>Call identification</td>
+<td align="center">Only for "end" type</td>
+<td>Identification</td>
+</tr>
+<tr>
+<td>source</td>
+<td align="center">string</td>
+<td>The subscriber phone number that originated the call</td>
+<td align="center">Only for "start" type</td>
+<td></td>
+</tr>
+<tr>
+<td>destination</td>
+<td align="center">string</td>
+<td>The phone number receiving the call</td>
+<td align="center">Only for "start" type</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> The phone number format is AAXXXXXXXXX, where AA is the area code and XXXXXXXXX is the phone number.
+The phone number is composed of 8 or 9 digits.</p>
+<h3 id="examples">Examples</h3>
+<ul>
+<li>Start call event:</li>
+</ul>
+<pre><code>{
+  &quot;type&quot;:  &quot;start&quot;, // or null to get start as default
+  &quot;timestamp&quot;:  1527001196, // or null to get current timestamp
+  &quot;call_id&quot;:  123, // or null to application generates
+  &quot;source&quot;:  &quot;11991232344&quot;,
+  &quot;destination&quot;:  &quot;11994345337&quot;
+}
 </code></pre>
 
-<p>If this was the <strong>first time</strong> you ran the project, you need execute:</p>
-<pre><code>make migrate
-make loaddatta
+<ul>
+<li>End call event:</li>
+</ul>
+<pre><code>{
+ &quot;type&quot;:  &quot;end&quot;,
+ &quot;timestamp&quot;:  1527001199, // or null to get current timestamp
+ &quot;call_id&quot;:  123,
+}
 </code></pre>
 
-<p>Now you have the project running on <a href="http://localhost:8000">http://localhost:8000</a> and the database fully started.</p>
-<p>If you wanna see the application's logs, run:</p>
-<pre><code>make logs
+<h3 id="responses">Responses</h3>
+<ul>
+<li><code>201</code> - <code>Created</code> - Return the created object;</li>
+<li><code>400</code> - <code>Bad Request</code> - Return the validation error.</li>
+</ul>
+<h2 id="bill-report">Bill Report</h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th align="center">Method</th>
+<th align="center">Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/telephony/bill-report/AAXXXXXXXXX/</td>
+<td align="center"><code>GET</code></td>
+<td align="center"><code>200</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> The phone number format is AAXXXXXXXXX, where AA is the area code and XXXXXXXXX is the phone number.
+The phone number is composed of 8 or 9 digits.</p>
+<h3 id="filters">Filters</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th align="center">Type</th>
+<th>Description</th>
+<th align="center">Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>month</td>
+<td align="center">int</td>
+<td>Month that you wanna filter</td>
+<td align="center">No</td>
+<td>Previous month</td>
+</tr>
+<tr>
+<td>year</td>
+<td align="center">int</td>
+<td>Year that you wanna filter</td>
+<td align="center">No</td>
+<td>Previous year</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> It's only possible to get a telephone bill after the reference period has ended.</p>
+<h3 id="examples_1">Examples</h3>
+<ul>
+<li><a href="https://thawing-meadow-82188.herokuapp.com/v1/telephony/bill-report/99988526423/?month=12&amp;year=2017">https://thawing-meadow-82188.herokuapp.com/v1/telephony/bill-report/99988526423/?month=12&amp;year=2017</a>:</li>
+</ul>
+<pre><code>{
+  &quot;count&quot;: 6,
+  &quot;filters&quot;: {
+    &quot;month&quot;: 12,
+    &quot;year&quot;: 2017
+  },
+  &quot;objects&quot;: [
+    {
+      &quot;destination&quot;: &quot;9993468278&quot;,
+      &quot;start_date&quot;: &quot;2017-12-12&quot;,
+      &quot;start_time&quot;: &quot;15:07:13&quot;,
+      &quot;duration&quot;: &quot;0h7m43s&quot;,
+      &quot;price&quot;: &quot;R$ 0,99&quot;
+    },
+    {
+      &quot;destination&quot;: &quot;9993468278&quot;,
+      &quot;start_date&quot;: &quot;2017-12-12&quot;,
+      &quot;start_time&quot;: &quot;22:47:56&quot;,
+      &quot;duration&quot;: &quot;0h3m0s&quot;,
+      &quot;price&quot;: &quot;R$ 0,36&quot;
+    },
+    {
+      &quot;destination&quot;: &quot;9993468278&quot;,
+      &quot;start_date&quot;: &quot;2017-12-12&quot;,
+      &quot;start_time&quot;: &quot;21:57:13&quot;,
+      &quot;duration&quot;: &quot;0h13m43s&quot;,
+      &quot;price&quot;: &quot;R$ 0,54&quot;
+    },
+    {
+      &quot;destination&quot;: &quot;9993468278&quot;,
+      &quot;start_date&quot;: &quot;2017-12-12&quot;,
+      &quot;start_time&quot;: &quot;04:57:13&quot;,
+      &quot;duration&quot;: &quot;1h13m43s&quot;,
+      &quot;price&quot;: &quot;R$ 1,26&quot;
+    },
+    {
+      &quot;destination&quot;: &quot;9993468278&quot;,
+      &quot;start_date&quot;: &quot;2017-12-12&quot;,
+      &quot;start_time&quot;: &quot;21:57:13&quot;,
+      &quot;duration&quot;: &quot;24h13m43s&quot;,
+      &quot;price&quot;: &quot;R$ 86,94&quot;
+    },
+    {
+      &quot;destination&quot;: &quot;9993468278&quot;,
+      &quot;start_date&quot;: &quot;2017-12-12&quot;,
+      &quot;start_time&quot;: &quot;15:07:58&quot;,
+      &quot;duration&quot;: &quot;0h4m58s&quot;,
+      &quot;price&quot;: &quot;R$ 0,72&quot;
+    }
+  ]
+}
 </code></pre>
 
-<h2 id="running-tests">Running tests</h2>
-<p>With the project running, execute:</p>
-<pre><code>make tests
-</code></pre>
+<h3 id="responses_1">Responses</h3>
+<ul>
+<li><code>200</code> - <code>Ok</code> - Return the report bill;</li>
+</ul>
               
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="api/" class="btn btn-neutral float-right" title="API">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-    </div>
   
 
   <hr/>
@@ -175,8 +345,6 @@ make loaddatta
       
       
       
-        <span style="margin-left: 15px"><a href="api/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
     </span>
 </div>
     <script>var base_url = '.';</script>
@@ -189,5 +357,5 @@ make loaddatta
 
 <!--
 MkDocs version : 0.17.3
-Build Date UTC : 2018-05-22 15:30:07
+Build Date UTC : 2018-05-22 15:52:30
 -->

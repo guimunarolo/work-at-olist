@@ -1,5 +1,4 @@
 site_name: Work at Olist
 pages:
   - Home: 'index.md'
-  - API: 'api.md'
 theme: readthedocs
