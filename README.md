@@ -37,7 +37,7 @@ If this was the **first time** you ran the project, you need execute:
 
 ```
 make migrate
-make loaddatta
+make loaddata
 ```
 
 Now you have the project running on [http://localhost:8000](http://localhost:8000) and the database fully started.
