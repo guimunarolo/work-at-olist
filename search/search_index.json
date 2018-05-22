@@ -1,0 +1,89 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "Olist Challenge\n\n\nThis is an API restful that provides a call events record and a bill report.\n\n\nThe applications was made with \nPython 3.6\n, \nDjango 2.0\n and hosted at \nHeroku\n.\n\n\n\n\nYou can see the entire challenge here \nWork at Olist\n.\n\n\n\n\nEnvironment\n\n\n\n\nMacbook Pro \n2017\n\n\nmacOS Sierra \n10.12.6\n\n\nAtom \n1.27.0\n\n\nvirtualenv \n15.1.0\n\n\nPython \n3.6.3\n\n\nDocker \n18.03.1-ce\n \nbuild 9ee9f40\n\n\ndocker-compose \n1.21.1\n \nbuild 5a3f1a3\n\n\n\n\nHow to run\n\n\nWith \nDocker\n and \ndocker-compose\n properly installed and running, execute:\n\n\nmake\n\n\n\n\nIf this was the \nfirst time\n you ran the project, you need execute:\n\n\nmake migrate\nmake loaddatta\n\n\n\n\nNow you have the project running on \nhttp://localhost:8000\n and the database fully started.\n\n\nIf you wanna see the application's logs, run:\n\n\nmake logs\n\n\n\n\nRunning tests\n\n\nWith the project running, execute:\n\n\nmake tests",
+            "title": "Home"
+        },
+        {
+            "location": "/#olist-challenge",
+            "text": "This is an API restful that provides a call events record and a bill report.  The applications was made with  Python 3.6 ,  Django 2.0  and hosted at  Heroku .   You can see the entire challenge here  Work at Olist .",
+            "title": "Olist Challenge"
+        },
+        {
+            "location": "/#environment",
+            "text": "Macbook Pro  2017  macOS Sierra  10.12.6  Atom  1.27.0  virtualenv  15.1.0  Python  3.6.3  Docker  18.03.1-ce   build 9ee9f40  docker-compose  1.21.1   build 5a3f1a3",
+            "title": "Environment"
+        },
+        {
+            "location": "/#how-to-run",
+            "text": "With  Docker  and  docker-compose  properly installed and running, execute:  make  If this was the  first time  you ran the project, you need execute:  make migrate\nmake loaddatta  Now you have the project running on  http://localhost:8000  and the database fully started.  If you wanna see the application's logs, run:  make logs",
+            "title": "How to run"
+        },
+        {
+            "location": "/#running-tests",
+            "text": "With the project running, execute:  make tests",
+            "title": "Running tests"
+        },
+        {
+            "location": "/api/",
+            "text": "API Documentation\n\n\nHere you can understand how this API works.\n\n\nURL\n\n\n\n\nhttps://thawing-meadow-82188.herokuapp.com/v1\n\n\n\n\nAccepted\n\n\n\n\njson\n\n\n\n\nCall Events Record\n\n\n\n\n\n\n\n\nEndpoint\n\n\nMethod\n\n\nResponse\n\n\n\n\n\n\n\n\n\n\n/telephony/call-events/\n\n\nPOST\n\n\n201\n, \n400\n\n\n\n\n\n\n\n\nFields\n\n\n\n\n\n\n\n\nField\n\n\nType\n\n\nDescription\n\n\nRequired\n\n\nDefault\n\n\n\n\n\n\n\n\n\n\ntype\n\n\nstring\n\n\nIndicate if it's a call \"start\" or \"end\" record\n\n\nNo\n\n\n\"start\"\n\n\n\n\n\n\ntimestamp\n\n\nint\n\n\nValid timestamp that event happens\n\n\nNo\n\n\nCurrent timestamp\n\n\n\n\n\n\ncall_id\n\n\nint\n\n\nCall identification\n\n\nOnly for \"end\" type\n\n\nIdentification\n\n\n\n\n\n\nsource\n\n\nstring\n\n\nThe subscriber phone number that originated the call\n\n\nOnly for \"start\" type\n\n\n\n\n\n\n\n\ndestination\n\n\nstring\n\n\nThe phone number receiving the call\n\n\nOnly for \"start\" type\n\n\n\n\n\n\n\n\n\n\nNote:\n The phone number format is AAXXXXXXXXX, where AA is the area code and XXXXXXXXX is the phone number.\nThe phone number is composed of 8 or 9 digits.\n\n\nExamples\n\n\n\n\nStart call event:\n\n\n\n\n{\n  \"type\":  \"start\", // or null to get start as default\n  \"timestamp\":  1527001196, // or null to get current timestamp\n  \"call_id\":  123, // or null to application generates\n  \"source\":  \"11991232344\",\n  \"destination\":  \"11994345337\"\n}\n\n\n\n\n\n\nEnd call event:\n\n\n\n\n{\n \"type\":  \"end\",\n \"timestamp\":  1527001199, // or null to get current timestamp\n \"call_id\":  123,\n}\n\n\n\n\nResponses\n\n\n\n\n201\n - \nCreated\n - Return the created object;\n\n\n400\n - \nBad Request\n - Return the validation error.\n\n\n\n\nBill Report\n\n\n\n\n\n\n\n\nEndpoint\n\n\nMethod\n\n\nResponse\n\n\n\n\n\n\n\n\n\n\n/telephony/bill-report/AAXXXXXXXXX/\n\n\nGET\n\n\n200\n\n\n\n\n\n\n\n\nNote:\n The phone number format is AAXXXXXXXXX, where AA is the area code and XXXXXXXXX is the phone number.\nThe phone number is composed of 8 or 9 digits.\n\n\nFilters\n\n\n\n\n\n\n\n\nField\n\n\nType\n\n\nDescription\n\n\nRequired\n\n\nDefault\n\n\n\n\n\n\n\n\n\n\nmonth\n\n\nint\n\n\nMonth that you wanna filter\n\n\nNo\n\n\nPrevious month\n\n\n\n\n\n\nyear\n\n\nint\n\n\nYear that you wanna filter\n\n\nNo\n\n\nPrevious year\n\n\n\n\n\n\n\n\nNote:\n It's only possible to get a telephone bill after the reference period has ended.\n\n\nExamples\n\n\n\n\nhttps://thawing-meadow-82188.herokuapp.com/v1/telephony/bill-report/99988526423/?month=12&year=2017\n:\n\n\n\n\n{\n  \"count\": 6,\n  \"filters\": {\n    \"month\": 12,\n    \"year\": 2017\n  },\n  \"objects\": [\n    {\n      \"destination\": \"9993468278\",\n      \"start_date\": \"2017-12-12\",\n      \"start_time\": \"15:07:13\",\n      \"duration\": \"0h7m43s\",\n      \"price\": \"R$ 0,99\"\n    },\n    {\n      \"destination\": \"9993468278\",\n      \"start_date\": \"2017-12-12\",\n      \"start_time\": \"22:47:56\",\n      \"duration\": \"0h3m0s\",\n      \"price\": \"R$ 0,36\"\n    },\n    {\n      \"destination\": \"9993468278\",\n      \"start_date\": \"2017-12-12\",\n      \"start_time\": \"21:57:13\",\n      \"duration\": \"0h13m43s\",\n      \"price\": \"R$ 0,54\"\n    },\n    {\n      \"destination\": \"9993468278\",\n      \"start_date\": \"2017-12-12\",\n      \"start_time\": \"04:57:13\",\n      \"duration\": \"1h13m43s\",\n      \"price\": \"R$ 1,26\"\n    },\n    {\n      \"destination\": \"9993468278\",\n      \"start_date\": \"2017-12-12\",\n      \"start_time\": \"21:57:13\",\n      \"duration\": \"24h13m43s\",\n      \"price\": \"R$ 86,94\"\n    },\n    {\n      \"destination\": \"9993468278\",\n      \"start_date\": \"2017-12-12\",\n      \"start_time\": \"15:07:58\",\n      \"duration\": \"0h4m58s\",\n      \"price\": \"R$ 0,72\"\n    }\n  ]\n}\n\n\n\n\nResponses\n\n\n\n\n200\n - \nOk\n - Return the report bill;",
+            "title": "API"
+        },
+        {
+            "location": "/api/#api-documentation",
+            "text": "Here you can understand how this API works.",
+            "title": "API Documentation"
+        },
+        {
+            "location": "/api/#url",
+            "text": "https://thawing-meadow-82188.herokuapp.com/v1",
+            "title": "URL"
+        },
+        {
+            "location": "/api/#accepted",
+            "text": "json",
+            "title": "Accepted"
+        },
+        {
+            "location": "/api/#call-events-record",
+            "text": "Endpoint  Method  Response      /telephony/call-events/  POST  201 ,  400",
+            "title": "Call Events Record"
+        },
+        {
+            "location": "/api/#fields",
+            "text": "Field  Type  Description  Required  Default      type  string  Indicate if it's a call \"start\" or \"end\" record  No  \"start\"    timestamp  int  Valid timestamp that event happens  No  Current timestamp    call_id  int  Call identification  Only for \"end\" type  Identification    source  string  The subscriber phone number that originated the call  Only for \"start\" type     destination  string  The phone number receiving the call  Only for \"start\" type      Note:  The phone number format is AAXXXXXXXXX, where AA is the area code and XXXXXXXXX is the phone number.\nThe phone number is composed of 8 or 9 digits.",
+            "title": "Fields"
+        },
+        {
+            "location": "/api/#examples",
+            "text": "Start call event:   {\n  \"type\":  \"start\", // or null to get start as default\n  \"timestamp\":  1527001196, // or null to get current timestamp\n  \"call_id\":  123, // or null to application generates\n  \"source\":  \"11991232344\",\n  \"destination\":  \"11994345337\"\n}   End call event:   {\n \"type\":  \"end\",\n \"timestamp\":  1527001199, // or null to get current timestamp\n \"call_id\":  123,\n}",
+            "title": "Examples"
+        },
+        {
+            "location": "/api/#responses",
+            "text": "201  -  Created  - Return the created object;  400  -  Bad Request  - Return the validation error.",
+            "title": "Responses"
+        },
+        {
+            "location": "/api/#bill-report",
+            "text": "Endpoint  Method  Response      /telephony/bill-report/AAXXXXXXXXX/  GET  200     Note:  The phone number format is AAXXXXXXXXX, where AA is the area code and XXXXXXXXX is the phone number.\nThe phone number is composed of 8 or 9 digits.",
+            "title": "Bill Report"
+        },
+        {
+            "location": "/api/#filters",
+            "text": "Field  Type  Description  Required  Default      month  int  Month that you wanna filter  No  Previous month    year  int  Year that you wanna filter  No  Previous year     Note:  It's only possible to get a telephone bill after the reference period has ended.",
+            "title": "Filters"
+        },
+        {
+            "location": "/api/#examples_1",
+            "text": "https://thawing-meadow-82188.herokuapp.com/v1/telephony/bill-report/99988526423/?month=12&year=2017 :   {\n  \"count\": 6,\n  \"filters\": {\n    \"month\": 12,\n    \"year\": 2017\n  },\n  \"objects\": [\n    {\n      \"destination\": \"9993468278\",\n      \"start_date\": \"2017-12-12\",\n      \"start_time\": \"15:07:13\",\n      \"duration\": \"0h7m43s\",\n      \"price\": \"R$ 0,99\"\n    },\n    {\n      \"destination\": \"9993468278\",\n      \"start_date\": \"2017-12-12\",\n      \"start_time\": \"22:47:56\",\n      \"duration\": \"0h3m0s\",\n      \"price\": \"R$ 0,36\"\n    },\n    {\n      \"destination\": \"9993468278\",\n      \"start_date\": \"2017-12-12\",\n      \"start_time\": \"21:57:13\",\n      \"duration\": \"0h13m43s\",\n      \"price\": \"R$ 0,54\"\n    },\n    {\n      \"destination\": \"9993468278\",\n      \"start_date\": \"2017-12-12\",\n      \"start_time\": \"04:57:13\",\n      \"duration\": \"1h13m43s\",\n      \"price\": \"R$ 1,26\"\n    },\n    {\n      \"destination\": \"9993468278\",\n      \"start_date\": \"2017-12-12\",\n      \"start_time\": \"21:57:13\",\n      \"duration\": \"24h13m43s\",\n      \"price\": \"R$ 86,94\"\n    },\n    {\n      \"destination\": \"9993468278\",\n      \"start_date\": \"2017-12-12\",\n      \"start_time\": \"15:07:58\",\n      \"duration\": \"0h4m58s\",\n      \"price\": \"R$ 0,72\"\n    }\n  ]\n}",
+            "title": "Examples"
+        },
+        {
+            "location": "/api/#responses_1",
+            "text": "200  -  Ok  - Return the report bill;",
+            "title": "Responses"
+        }
+    ]
+}
