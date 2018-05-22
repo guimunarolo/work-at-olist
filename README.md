@@ -20,7 +20,14 @@ The applications was made with `Python 3.6`, `Django 2.0` and hosted at `Heroku`
 
 ## How to run
 
-With `Docker` and `docker-compose` properly installed and running, execute:
+First you need to clone this project:
+
+```
+git clone git@github.com:guimunarolo/work-at-olist.git
+cd work-at-olist
+```
+
+Now with `Docker` and `docker-compose` properly installed and running, execute:
 
 ```
 make
