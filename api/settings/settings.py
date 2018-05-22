@@ -28,7 +28,7 @@ SECRET_KEY = 'klf2v6zgeq@(-mbkx&5wxe4+m#$eo1b(6n#w_&#8b_-a3fk%xj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=config.boolean)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=config.list)
 
 
 # Application definition
