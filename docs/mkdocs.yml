@@ -1,1 +1,5 @@
-site_name: My Docs
+site_name: Work at Olist
+pages:
+  - Home: 'index.md'
+  - API: 'api.md'
+theme: readthedocs

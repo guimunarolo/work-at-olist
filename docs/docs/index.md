@@ -1,17 +1,50 @@
-# Welcome to MkDocs
+# Olist Challenge
 
-For full documentation visit [mkdocs.org](http://mkdocs.org).
+This is an API restful that provides a call events record and a bill report.
 
-## Commands
+The applications was made with `Python 3.6`, `Django 2.0` and hosted at `Heroku`.
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
+> You can see the entire challenge here [Work at Olist](https://github.com/olist/work-at-olist).
 
-## Project layout
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## Environment
+
+- Macbook Pro `2017`
+- macOS Sierra `10.12.6`
+- Atom `1.27.0`
+- virtualenv `15.1.0`
+- Python `3.6.3`
+- Docker `18.03.1-ce` `build 9ee9f40`
+- docker-compose `1.21.1` `build 5a3f1a3`
+
+
+## How to run
+
+With `Docker` and `docker-compose` properly installed and running, execute:
+
+```
+make
+```
+
+If this was the **first time** you ran the project, you need execute:
+
+```
+make migrate
+make loaddatta
+```
+
+Now you have the project running on [http://localhost:8000](http://localhost:8000) and the database fully started.
+
+If you wanna see the application's logs, run:
+
+```
+make logs
+```
+
+## Running tests
+
+With the project running, execute:
+
+```
+make tests
+```
